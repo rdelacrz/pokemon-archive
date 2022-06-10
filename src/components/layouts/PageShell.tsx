@@ -5,8 +5,6 @@ import type { PageContext } from '~/types';
 
 import './PageShell.css';
 
-import logo from '~/assets/logo.svg';
-
 export { PageShell }
 
 function PageShell({ children, pageContext }: { children: React.ReactNode; pageContext: PageContext }) {
@@ -85,7 +83,7 @@ function Logo() {
       }}
     >
       <a href="/">
-        <img src={logo} height={64} width={64} alt="logo" />
+        <img src='/logo.svg' height={64} width={64} alt="logo" />
       </a>
     </div>
   )
