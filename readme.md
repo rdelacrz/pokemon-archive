@@ -10,7 +10,11 @@ Use yarn to install dependencies. If you do not have yarn already installed, you
 npm install --global yarn
 ```
 
-Otherwise, run **yarn** in order to install dependencies. 
+Otherwise, run **yarn** in order to install dependencies:
+
+```bash
+yarn
+```
 
 ### Vite
 
