@@ -5,8 +5,9 @@ interface ImportMetaEnv {
   readonly DEV: boolean;
   readonly PROD: boolean;
 
-  readonly VITE_MONGODB_USERNAME: string;
-  readonly VITE_MONGODB_PASSWORD: string;
+  readonly MONGODB_USERNAME: string;
+  readonly MONGODB_PASSWORD: string;
+  readonly MONGODB_HOST: string;
 }
 
 interface ImportMeta {
