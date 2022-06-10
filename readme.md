@@ -35,3 +35,13 @@ yarn local
 ```
 
 This command works by running a test server for Vercel's serverless functions, and then internally calling whatever command is linked to **yarn dev**, which in this application's case will run the frontend application in Vite's development server.
+
+## Deploying to Production
+
+Deploying to production is very simple. All you have to do is push your most recent (bug-free) changes to the **main** branch of this application's associated git repository. This can be done using this line:
+
+```bash
+git push origin main
+```
+
+After the latest changes have been pushed to git, Vercel will detect that latest changes in the **main** branch and attempt to build the application on [production](https://pokemon-archive.vercel.app). If everything goes well, you should be able to see the latest changes on there.
