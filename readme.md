@@ -18,6 +18,21 @@ This React-based application uses the [Vite framework](https://vitejs.dev) to ru
 
 As of now, the Vercel-based application can be viewed through [here](https://pokemon-archive.vercel.app).
 
+### Vercel
+
+Vercel is used to not only deploy the application, but also to run the serverless functions in the background via **vercel dev**. In order to run this command, you must first install vercel globally via the following command:
+
+```bash
+yarn global add vercel
+```
+
+Afterwards, you can run your the serverless functions along with your frontend build by running:
+
+```bash
+yarn local
+```
+
+
 ## Running in Development
 
 In order to run this application in develop
