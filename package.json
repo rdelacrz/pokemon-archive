@@ -26,7 +26,6 @@
   "devDependencies": {
     "@vercel/ncc": "0.32.0",
     "ts-node": "^10.5.0",
-    "vercel": "^25.1.0",
     "vite": "^2.8.4",
     "vite-plugin-ssr": "^0.3.64"
   }
