@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+.env*
+!.env.template
 .output
 .vercel
 
@@ -25,6 +27,3 @@ dist-ssr
 *.sln
 *.sw?
 
-.vercel
-
-.vercel
