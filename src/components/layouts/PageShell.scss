@@ -1,0 +1,50 @@
+/* This CSS is common to all pages */
+
+html, body {
+  width: 100%;
+  @include responsive-multi-setter((
+      font-size: (17px, 18px, 20px)
+  ), 3);
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+* {
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+}
+
+.navitem {
+  padding: 3px 10px;
+}
+.navitem.is-active {
+  background-color: #eee;
+}
+
+// For labeling items without visual text for screen readers
+.hidden-label {
+  opacity: 0;
+  overflow: hidden;
+  width: 0;
+}
+
+// Used to handle major desktop/mobile differences
+.desktop {
+  // Hides content smaller than md screens 
+  @media only screen and (max-width: 959px) {
+      display: none !important;
+  }
+}
+.mobile {
+  // Hides content larger than sm screens 
+  @media only screen and (min-width: 960px) {
+      display: none !important;
+  }
+}

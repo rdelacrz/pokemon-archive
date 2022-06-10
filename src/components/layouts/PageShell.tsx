@@ -3,7 +3,7 @@ import { Link } from '~/components/common/Link';
 import { PageContextProvider } from '~/contexts/usePageContext';
 import type { PageContext } from '~/types';
 
-import './PageShell.css';
+import './PageShell.scss';
 
 export { PageShell }
 
