@@ -15,7 +15,7 @@ mkdir .output
 mkdir -p .output/static
 cp -a dist/client/. .output/static
 
-# Step 5: Bundle render function with it's depdendencies to the single javascript file
+# Step 5: Bundle render function with its dependencies to the single javascript file
 # If you are using typescript, simply replace extension with ".ts"
 mkdir -p .output/server/pages
 yarn ncc build vercel/render.js --minify --out .output/server/pages
