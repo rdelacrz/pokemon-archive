@@ -1,1 +1,0 @@
-import{j as e,F as n,a as r}from"./renderer/_default.page.client.tsx.bb3732c7.js";function a(){return e(n,{children:[r("h1",{children:"About"}),r("p",{children:"A colored page."})]})}export{a as Page};
