@@ -10,8 +10,14 @@ Use yarn to install dependencies. If you do not have yarn already installed, you
 npm install --global yarn
 ```
 
+Otherwise, run **yarn** in order to run dependencies. 
+
 ### Vite
 
 This React-based application uses the [Vite framework](https://vitejs.dev) to run the development server and and build the production bundle. It also makes use of [vite-plugin-ssr](https://vite-plugin-ssr.com) to provide additional features such as Server Side Rendering, Filesystem Routing, and Vercel deployment capabilities.
 
 As of now, the Vercel-based application can be viewed through [here](https://pokemon-archive.vercel.app).
+
+## Running in Development
+
+In order to run this application in develop
