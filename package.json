@@ -4,7 +4,8 @@
     "prod": "yarn build && yarn server:prod",
     "build": "vite build && vite build --ssr",
     "server": "ts-node ./server",
-    "server:prod": "cross-env NODE_ENV=production ts-node ./server"
+    "server:prod": "cross-env NODE_ENV=production ts-node ./server",
+    "vercel-build": "./vercel/deploy.sh"
   },
   "dependencies": {
     "@types/compression": "^1.7.2",
