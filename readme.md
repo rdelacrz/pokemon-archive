@@ -4,7 +4,7 @@ A one-stop location for Pokemon card searching and deck construction.
 
 ## Initial Setup
 
-Before implementing anything in this application, you must first install its dependencies and make sure you understand its inner frameworks. This is a **React** application that leverages **Typescript**, **Vite**, and **Vercel** in order to make the application's development and bundling processes as organized and streamlined as possible.
+Before implementing anything in this application, you must first install its dependencies and make sure you understand its inner frameworks. This is a **React** application that leverages [Typescript](https://www.typescriptlang.org), [Vite](https://vitejs.dev), and [Vercel](https://vercel.com) in order to keep the application's development and bundling processes as organized and streamlined as possible.
 
 ### Installation
 
@@ -26,7 +26,7 @@ This React-based application uses the [Vite framework](https://vitejs.dev) to ru
 
 #### Vercel
 
-[Vercel](https://vercel.com/) is used to not only deploy the application, but also to locally run backend serverless functions in the background. In order to make use of it in development, you must install vercel globally via the following command:
+[Vercel](https://vercel.com) is used to not only deploy the application, but also to locally run backend serverless functions in the background. In order to make use of it in development, you must install vercel globally via the following command:
 
 ```bash
 yarn global add vercel
