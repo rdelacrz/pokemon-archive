@@ -10,29 +10,28 @@ Use yarn to install dependencies. If you do not have yarn already installed, you
 npm install --global yarn
 ```
 
-Otherwise, run **yarn** in order to run dependencies. 
+Otherwise, run **yarn** in order to install dependencies. 
 
 ### Vite
 
 This React-based application uses the [Vite framework](https://vitejs.dev) to run the development server and and build the production bundle. It also makes use of [vite-plugin-ssr](https://vite-plugin-ssr.com) to provide additional features such as Server Side Rendering, Filesystem Routing, and Vercel deployment capabilities.
 
-As of now, the Vercel-based application can be viewed through [here](https://pokemon-archive.vercel.app).
-
 ### Vercel
 
-Vercel is used to not only deploy the application, but also to run the serverless functions in the background via **vercel dev**. In order to run this command, you must first install vercel globally via the following command:
+[Vercel](https://vercel.com/) is used to not only deploy the application, but also to locally run backend serverless functions in the background. In order to make use of it in development, you must install vercel globally via the following command:
 
 ```bash
 yarn global add vercel
 ```
 
-Afterwards, you can run your the serverless functions along with your frontend build by running:
+The deployed application can be viewed through [here](https://pokemon-archive.vercel.app).
+
+## Running in Development
+
+In order to run this application in development, you need to not only run Vite's development's server for the frontend, but you must also run Vercel's serverless functions in the background in order have a working backend API. These two things can be taken care of at the same time by running the **vercel dev** command. This can be done via yarn using the following line:
 
 ```bash
 yarn local
 ```
 
-
-## Running in Development
-
-In order to run this application in develop
+This command works by running a test server for Vercel's serverless functions, and then internally calling whatever command is linked to **yarn dev**, which in this application's case will run the frontend application in Vite's development server.
