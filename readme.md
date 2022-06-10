@@ -12,4 +12,6 @@ npm install --global yarn
 
 ### Vite
 
-This React-based application uses the [Vite framework](https://vitejs.dev) to run the development server and and build the production bundle. It also makes use of [vite-plugin-ssr](https://vite-plugin-ssr.com) to provide an additional features such as Server Side Rendering, Filesystem Routing, and Vercel deployment capabilities.
+This React-based application uses the [Vite framework](https://vitejs.dev) to run the development server and and build the production bundle. It also makes use of [vite-plugin-ssr](https://vite-plugin-ssr.com) to provide additional features such as Server Side Rendering, Filesystem Routing, and Vercel deployment capabilities.
+
+As of now, the Vercel-based application can be viewed through [here](https://pokemon-archive.vercel.app).
