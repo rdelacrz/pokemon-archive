@@ -8,14 +8,8 @@ async function loginUser(request: VercelRequest, response: VercelResponse) {
   try {
     await connect(MONGODB_URI);
 
-    // You can use a Model to create new documents using `new`:
-    const userDoc = new User({
-      username: 'Foo',
-      password: 'pass',
-      email: 'test@email.com'
-    });
-    await userDoc.save();
-    return response.send('doommaker made');
+    // TODO: Implement authentication system
+    return response.send(true);
   } catch (err) {
     return response.status(400).send(err);
   }
