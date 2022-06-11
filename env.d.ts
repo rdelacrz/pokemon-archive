@@ -8,6 +8,7 @@ interface ImportMetaEnv {
   readonly MONGODB_USERNAME: string;
   readonly MONGODB_PASSWORD: string;
   readonly MONGODB_HOST: string;
+  readonly MONGODB_DB: string;
 }
 
 interface ImportMeta {

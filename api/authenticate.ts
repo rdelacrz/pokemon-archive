@@ -1,21 +1,22 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { MongoClient } from 'mongodb';
-import { connectToMongoDB } from './_mongoDBUtils';
+import mongoose, { Schema } from 'mongoose';
+import { MONGODB_URI } from './_mongoDBUtils';
 
 export default async function handler(request: VercelRequest, response: VercelResponse) {
-  let client: MongoClient | undefined;
-
   try {
-    client = await connectToMongoDB();
-
-    // perform actions on the collection object
-    const collection = client.db('pokemonArchive').collection('users');
-    const documentCount = await collection.countDocuments();
-
-    client.close();
-    return response.send(documentCount + ' Documentss');
+    await mongoose.connect(MONGODB_URI);
+    const UserModel = mongoose.model('users', new Schema({
+      username: String,
+      password: String,
+      firstName: String,
+      lastName: String,
+      email: String,
+      loginDate: Date,
+    }));
+    const userDic = new UserModel({ username: 'doommakers' });
+    await userDic.save();
+    return response.send('doommaker made');
   } catch (err) {
-    client?.close();
     return response.send(err);
   }
 }
