@@ -15,6 +15,7 @@ interface IUser {
 
 const userSchema = new Schema<IUser>({
   username: { type: String, required: [true, 'Username is required!'] },
+  password: { type: String, required: [true, 'Password is required!'] },
   salt: { type: String, required: true },
   firstName: { type: String, required: false },
   lastName: { type: String, required: false },

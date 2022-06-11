@@ -33,14 +33,14 @@ async function createUser(request: VercelRequest, response: VercelResponse) {
       return response.status(403).json({ error: 'Password and confirmation text must match!' });
     }
 
-    // Checks if username already exists in system
-    let user = await User.find({ username }).exec();
+    // Checks if username already exists in system (collation ensure case insensitivity)
+    let user = await User.find({ username }).collation({ locale: 'en', strength: 2 }).exec();
     if (user.length > 0) {
       return response.status(403).json({ error: 'Username already exists in system!' });
     }
 
-    // Checks if email address already exists in system
-    user = await User.find({ email }).exec();
+    // Checks if email address already exists in system (collation ensure case insensitivity)
+    user = await User.find({ email }).collation({ locale: 'en', strength: 2 }).exec();
     if (user.length > 0) {
       return response.status(403).json({ error: 'Email address already exists in system!' });
     }
