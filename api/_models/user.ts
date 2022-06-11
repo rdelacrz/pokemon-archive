@@ -15,30 +15,6 @@ interface IUser {
 
 const userSchema = new Schema<IUser>({
   username: { type: String, required: [true, 'Username is required!'] },
-  password: {
-    type: String,
-    required: [true, 'Password is required!'],
-    validate: [
-      {
-        validator: function (value: string) {
-          return value.length >= 8;
-        },
-        message: 'Password must be at least 8 characters long!',
-      },
-      {
-        validator: function (value: string) {
-          return value.length <= 100;
-        },
-        message: 'Password cannot be longer than 100 characters!',
-      },
-      {
-        validator: function (value: string) {
-          return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+])[A-Za-z\d!@#$%^&*()\-+]{8,100}$/.test(value);
-        },
-        message: 'Password must have at least one uppercase letter, one lowercase letter, one number and one special character!',
-      },
-    ],
-  },
   salt: { type: String, required: true },
   firstName: { type: String, required: false },
   lastName: { type: String, required: false },

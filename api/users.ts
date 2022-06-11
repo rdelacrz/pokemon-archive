@@ -59,10 +59,10 @@ async function createUser(request: VercelRequest, response: VercelResponse) {
       creationDate: new Date(),
       active: true,   // TODO: Set initially to false, and have user verify account via email address
     });
-    newUser.save();
+    await newUser.save();
 
     return response.status(200).send(true);
-  } catch (err) {
+  } catch (err: any) {
     return response.status(400).send(err);
   }
 }
