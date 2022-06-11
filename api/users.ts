@@ -7,12 +7,12 @@ import { MONGODB_URI } from './_constants';
 const validPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+])[A-Za-z\d!@#$%^&*()\-+]{8,100}$/;
 
 async function createUser(request: VercelRequest, response: VercelResponse) {
-  const username = request.query.username as string;
-  const password = request.query.password as string;
-  const confirmPassword = request.query.confirmPassword as string;
-  const email = request.query.email as string;
-  const firstName = request.query.firstName as string;
-  const lastName = request.query.lastName as string;
+  const username = request.body.username as string;
+  const password = request.body.password as string;
+  const confirmPassword = request.body.confirmPassword as string;
+  const email = request.body.email as string;
+  const firstName = request.body.firstName as string;
+  const lastName = request.body.lastName as string;
 
   try {
     await connect(MONGODB_URI);
@@ -21,7 +21,10 @@ async function createUser(request: VercelRequest, response: VercelResponse) {
     // 1: At least 8 characters long
     // 2: At most 100 characters long
     // 3. Has at least one uppercase letter, one lowercase letter, one number and one special character
-    if (!password?.length || !validPasswordRegex.test(password)) {
+    if (!password?.length || password.length < 8) {
+      return response.status(403).json({ error: 'Password must be at least 8 characters long!' });
+    }
+    if (!validPasswordRegex.test(password)) {
       return response.status(403).json({ error: 'Password format is invalid!' });
     }
 
