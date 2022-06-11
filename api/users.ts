@@ -54,6 +54,7 @@ async function createUser(request: VercelRequest, response: VercelResponse) {
       username,
       password: hashedPassword,
       email,
+      salt,
       firstName,
       lastName,
       creationDate: new Date(),
