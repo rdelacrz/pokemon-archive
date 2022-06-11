@@ -32,6 +32,10 @@ This React-based application uses the [Vite framework](https://vitejs.dev) to ru
 yarn global add vercel
 ```
 
+##### Integrating Vercel with MongoDB
+
+Special steps need to be taken in order to integrate Vercel-based production builds with MongoDB. You may read about it [here](https://www.mongodb.com/docs/atlas/reference/partner-integrations/vercel).
+
 The deployed application can be viewed through [here](https://pokemon-archive.vercel.app).
 
 ### Running in Development
