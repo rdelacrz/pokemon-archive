@@ -10,6 +10,7 @@ interface IUser {
   creationDate: Date;
   loginDate: Date;
   modifiedDate: Date;
+  verified: boolean;
   active: boolean;
 }
 
@@ -32,6 +33,7 @@ const userSchema = new Schema<IUser>({
   creationDate: { type: Date, required: false },
   loginDate: { type: Date, required: false },
   modifiedDate: { type: Date, required: false },
+  verified: { type: Boolean, required: false },
   active: { type: Boolean, required: false },
 });
 

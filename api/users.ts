@@ -3,6 +3,7 @@ import { connect } from 'mongoose';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { User } from './_models';
 import { MONGODB_URI } from './_constants';
+import { sendEmail } from './_emailManager';
 
 const validPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+])[A-Za-z\d!@#$%^&*()\-+]{8,100}$/;
 
@@ -52,12 +53,24 @@ async function createUser(request: VercelRequest, response: VercelResponse) {
       firstName,
       lastName,
       creationDate: new Date(),
+      verified: false,
       active: true,   // TODO: Set initially to false, and have user verify account via email address
     });
     await newUser.save();
 
+    const subject = 'User Account Verification';
+    const verificationLink = 'http://www.google.com';   // TODO: send actual verification api-based link
+    const emailBody = `
+      <p>Dear Pokemon fan,</p>
+      <p>Please verify your account by clicking the link below:</p>
+      <p><a href='${verificationLink}'></a>${verificationLink}</p>
+      <p>Best regards,<br /> Pokemon Archive Team</p>
+    `;
+    await sendEmail(email, subject, emailBody, firstName, lastName);
+
     return response.status(200).send(true);
   } catch (err: any) {
+    console.log(err)
     return response.status(400).send(err);
   }
 }
