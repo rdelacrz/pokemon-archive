@@ -39,12 +39,6 @@ async function createUser(request: VercelRequest, response: VercelResponse) {
       return response.status(403).json({ error: 'Username already exists in system!' });
     }
 
-    // Checks if email address already exists in system (collation ensure case insensitivity)
-    user = await User.find({ email }).collation({ locale: 'en', strength: 2 }).exec();
-    if (user.length > 0) {
-      return response.status(403).json({ error: 'Email address already exists in system!' });
-    }
-
     // Hashes password with Bcrypt algorithm
     const salt = await genSalt(10);
     const hashedPassword = await hash(password, salt);
