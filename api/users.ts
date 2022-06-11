@@ -35,13 +35,13 @@ async function createUser(request: VercelRequest, response: VercelResponse) {
 
     // Checks if username already exists in system
     let user = await User.find({ username }).exec();
-    if (user) {
+    if (user.length > 0) {
       return response.status(403).json({ error: 'Username already exists in system!' });
     }
 
     // Checks if email address already exists in system
     user = await User.find({ email }).exec();
-    if (user) {
+    if (user.length > 0) {
       return response.status(403).json({ error: 'Email address already exists in system!' });
     }
 
