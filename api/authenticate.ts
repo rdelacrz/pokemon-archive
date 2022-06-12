@@ -21,7 +21,7 @@ async function loginUser(request: VercelRequest, response: VercelResponse) {
       return response.status(401).json({ error: 'The username or password you entered is incorrect.' });
     }
 
-    // TODO: Implement authentication system
+    // TODO: Implement authentication system with JWT token
     return response.send(true);
   } catch (err) {
     return response.status(400).send(err);
