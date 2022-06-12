@@ -23,21 +23,21 @@ async function createUser(request: VercelRequest, response: VercelResponse) {
     // 2: At most 100 characters long
     // 3. Has at least one uppercase letter, one lowercase letter, one number and one special character
     if (!password?.length || password.length < 8) {
-      return response.status(403).json({ error: 'Password must be at least 8 characters long!' });
+      return response.status(403).json({ error: 'Password must be at least 8 characters long.' });
     }
     if (!validPasswordRegex.test(password)) {
-      return response.status(403).json({ error: 'Password format is invalid!' });
+      return response.status(403).json({ error: 'Password format is invalid.' });
     }
 
     // Checks if password matches confirm password (other password validations will be performed in User schema)
     if (password !== confirmPassword) {
-      return response.status(403).json({ error: 'Password and confirmation text must match!' });
+      return response.status(403).json({ error: 'Password and confirmation text must match.' });
     }
 
     // Checks if username already exists in system (collation ensure case insensitivity)
     let user = await User.find({ username }).collation({ locale: 'en', strength: 2 }).exec();
     if (user.length > 0) {
-      return response.status(403).json({ error: 'Username already exists in system!' });
+      return response.status(403).json({ error: 'Username already exists in system.' });
     }
 
     // Hashes password with Bcrypt algorithm
