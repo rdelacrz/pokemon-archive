@@ -2,8 +2,8 @@ import { genSalt, hash } from 'bcrypt';
 import { connect } from 'mongoose';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { User } from './_models';
-import { MONGODB_URI } from './_constants';
 import { sendEmail } from './_emailManager';
+import { MONGODB_URI } from './_utils';
 
 const validPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+])[A-Za-z\d!@#$%^&*()\-+]{8,100}$/;
 

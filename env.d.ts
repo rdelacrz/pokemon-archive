@@ -19,6 +19,9 @@ declare global {
       readonly MONGODB_DB: string;
       readonly SENDINBLUE_API_KEY: string;
       readonly SENDINBLUE_API_URL: string;
+      readonly JWT_SECRET: string;
+      readonly JWT_ISSUER: string;
+      readonly JWT_AUDIENCE: string;
     }
   }
 }

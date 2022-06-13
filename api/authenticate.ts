@@ -1,8 +1,9 @@
 import { compare } from 'bcrypt';
+import { SignJWT, decodeJwt, jwtVerify } from 'jose';
 import { connect } from 'mongoose';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { User } from './_models';
-import { MONGODB_URI } from './_constants';
+import { MONGODB_URI, SECRET_KEY, verifyJWT } from './_utils';
 
 async function loginUser(request: VercelRequest, response: VercelResponse) {
   const username = request.body.username as string;
@@ -20,10 +21,18 @@ async function loginUser(request: VercelRequest, response: VercelResponse) {
     if (!isMatch) {
       return response.status(401).json({ error: 'The username or password you entered is incorrect.' });
     }
+    
+    const jwt = await new SignJWT({ 'user': user[0].id })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuedAt()
+      .setIssuer(process.env.JWT_ISSUER as string)
+      .setAudience(process.env.JWT_AUDIENCE as string)
+      .setExpirationTime('24h')
+      .sign(SECRET_KEY);
 
-    // TODO: Implement authentication system with JWT token
-    return response.send(true);
+    return response.send(jwt);
   } catch (err) {
+    console.error(err)
     return response.status(400).send(err);
   }
 }

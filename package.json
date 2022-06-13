@@ -20,6 +20,7 @@
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
     "express": "^4.17.3",
+    "jose": "^4.8.1",
     "mongodb": "^4.7.0",
     "mongoose": "^6.3.6",
     "node-fetch": "2.6.7",
