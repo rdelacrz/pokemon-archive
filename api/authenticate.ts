@@ -1,9 +1,9 @@
 import { compare } from 'bcrypt';
-import { SignJWT, decodeJwt, jwtVerify } from 'jose';
+import { SignJWT } from 'jose';
 import { connect } from 'mongoose';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { User } from './_models';
-import { MONGODB_URI, SECRET_KEY, verifyJWT } from './_utils';
+import { MONGODB_URI, SECRET_KEY } from './_utils';
 
 async function loginUser(request: VercelRequest, response: VercelResponse) {
   const username = request.body.username as string;
@@ -25,8 +25,8 @@ async function loginUser(request: VercelRequest, response: VercelResponse) {
     const jwt = await new SignJWT({ 'user': user[0].id })
       .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()
-      .setIssuer(process.env.JWT_ISSUER as string)
-      .setAudience(process.env.JWT_AUDIENCE as string)
+      .setIssuer(process.env.JWT_ISSUER)
+      .setAudience(process.env.JWT_AUDIENCE)
       .setExpirationTime('24h')
       .sign(SECRET_KEY);
 

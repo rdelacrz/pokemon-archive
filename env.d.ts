@@ -10,18 +10,16 @@ interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
 
-declare global {
-  namespace NodeJS {
-    interface ProcessEnv {
-      readonly MONGODB_USERNAME: string;
-      readonly MONGODB_PASSWORD: string;
-      readonly MONGODB_HOST: string;
-      readonly MONGODB_DB: string;
-      readonly SENDINBLUE_API_KEY: string;
-      readonly SENDINBLUE_API_URL: string;
-      readonly JWT_SECRET: string;
-      readonly JWT_ISSUER: string;
-      readonly JWT_AUDIENCE: string;
-    }
+namespace NodeJS {
+  interface ProcessEnv {
+    readonly MONGODB_USERNAME: string;
+    readonly MONGODB_PASSWORD: string;
+    readonly MONGODB_HOST: string;
+    readonly MONGODB_DB: string;
+    readonly SENDINBLUE_API_KEY: string;
+    readonly SENDINBLUE_API_URL: string;
+    readonly JWT_SECRET: string;
+    readonly JWT_ISSUER: string;
+    readonly JWT_AUDIENCE: string;
   }
 }
