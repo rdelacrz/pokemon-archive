@@ -22,6 +22,7 @@ namespace NodeJS {
     readonly JWT_ISSUER: string;
     readonly JWT_AUDIENCE: string;
     readonly JWT_VERIFY_AUDIENCE: string;
+    readonly POKEMON_TGC_API_KEY: string;
     readonly BASE_URL: string;
   }
 }
