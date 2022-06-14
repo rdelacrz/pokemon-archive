@@ -12,12 +12,10 @@ async function loginUser(request: VercelRequest, response: VercelResponse) {
   try {
     await connect(MONGODB_URI);
 
-    const users = await User.find({ username }).collation({ locale: 'en', strength: 2 }).exec();
-    if (users.length === 0) {
+    const user = await User.findOne({ username }).collation({ locale: 'en', strength: 2 }).exec();
+    if (!user) {
       return response.status(401).json({ error: 'The username or password you entered is incorrect.' });
     }
-
-    const user = users[0];
 
     const isMatch = await compare(password, user.password);
     if (!isMatch) {
