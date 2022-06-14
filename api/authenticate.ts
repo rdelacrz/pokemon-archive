@@ -12,27 +12,40 @@ async function loginUser(request: VercelRequest, response: VercelResponse) {
   try {
     await connect(MONGODB_URI);
 
-    const user = await User.find({ username }).collation({ locale: 'en', strength: 2 }).exec();
-    if (user.length === 0) {
+    const users = await User.find({ username }).collation({ locale: 'en', strength: 2 }).exec();
+    if (users.length === 0) {
       return response.status(401).json({ error: 'The username or password you entered is incorrect.' });
     }
 
-    const isMatch = await compare(password, user[0].password);
+    const user = users[0];
+
+    const isMatch = await compare(password, user.password);
     if (!isMatch) {
       return response.status(401).json({ error: 'The username or password you entered is incorrect.' });
     }
+
+    if (!user.verified) {
+      return response.status(401).json({ error: 'This profile must be verified.' });
+    }
+
+    if (!user.active) {
+      return response.status(401).json({ error: 'This profile has been deactivated.' });
+    }
     
-    const jwt = await new SignJWT({ 'user': user[0].id })
+    const jwt = await new SignJWT({ 'userId': user.id })
       .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()
-      .setIssuer(process.env.JWT_ISSUER)
-      .setAudience(process.env.JWT_AUDIENCE)
+      .setIssuer(process.env.JWT_ISSUER || '')
+      .setAudience(process.env.JWT_AUDIENCE || '')
       .setExpirationTime('24h')
       .sign(SECRET_KEY);
+    
+    // Updates login date
+    user.loginDate = new Date();
+    await user.save();
 
     return response.send(jwt);
   } catch (err) {
-    console.error(err)
     return response.status(400).send(err);
   }
 }

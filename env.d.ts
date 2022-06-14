@@ -21,5 +21,7 @@ namespace NodeJS {
     readonly JWT_SECRET: string;
     readonly JWT_ISSUER: string;
     readonly JWT_AUDIENCE: string;
+    readonly JWT_VERIFY_AUDIENCE: string;
+    readonly BASE_URL: string;
   }
 }
