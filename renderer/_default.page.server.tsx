@@ -1,8 +1,6 @@
 import ReactDOMServer from 'react-dom/server';
-import React from 'react';
 import { PageShell } from '~/components/layouts/PageShell';
-import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr';
-import logoUrl from '~/assets/logo.svg';
+import { escapeInject, dangerouslySkipEscape, pipeNodeStream } from 'vite-plugin-ssr';
 import type { PageContext } from '~/types';
 import type { PageContextBuiltIn } from 'vite-plugin-ssr';
 
@@ -12,11 +10,20 @@ export const passToClient = ['pageProps', 'urlPathname']
 
 async function render(pageContext: PageContextBuiltIn & PageContext) {
   const { Page, pageProps } = pageContext;
-  const pageHtml = ReactDOMServer.renderToString(
-    <PageShell pageContext={pageContext}>
-      <Page {...pageProps} />
-    </PageShell>,
-  );
+
+  const streamPipe = pipeNodeStream(writable => {
+    // `writable` is a Node.js writable
+    const stream = ReactDOMServer.renderToPipeableStream(
+      <PageShell pageContext={pageContext}>
+        <Page {...pageProps} />
+      </PageShell>,
+      {
+        onShellReady() {
+          stream.pipe(writable);
+        }
+      }
+    );
+  });
 
   // See https://vite-plugin-ssr.com/head
   const { documentProps } = pageContext;
@@ -33,7 +40,7 @@ async function render(pageContext: PageContextBuiltIn & PageContext) {
         <title>${title}</title>
       </head>
       <body>
-        <div id="page-view">${dangerouslySkipEscape(pageHtml)}</div>
+        <div id="page-view">${streamPipe}</div>
       </body>
     </html>`;
 

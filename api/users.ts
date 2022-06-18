@@ -35,7 +35,7 @@ async function registerUser(request: VercelRequest, response: VercelResponse) {
       return response.status(403).json({ error: 'Password and confirmation text must match.' });
     }
 
-    // Checks if username already exists in system (collation ensure case insensitivity)
+    // Checks if username already exists in system (collation ensures case insensitivity)
     const user = await User.findOne({ username }).collation({ locale: 'en', strength: 2 }).exec();
     if (user) {
       return response.status(403).json({ error: 'Username already exists in system.' });

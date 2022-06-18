@@ -1,9 +1,14 @@
-/* This CSS is common to all pages */
+/* Global styles */
+
+// Primereact related styling
+@import '@/primeicons/primeicons.css';
+@import '@/primereact/resources/themes/lara-light-blue/theme.css';
+@import '@/primereact/resources/primereact.min.css';
 
 html, body {
   width: 100%;
   @include responsive-multi-setter((
-      font-size: (17px, 18px, 20px)
+    font-size: (17px, 18px, 20px)
   ), 3);
 }
 
@@ -19,13 +24,6 @@ body {
 }
 a {
   text-decoration: none;
-}
-
-.navitem {
-  padding: 3px 10px;
-}
-.navitem.is-active {
-  background-color: #eee;
 }
 
 // For labeling items without visual text for screen readers

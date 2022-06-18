@@ -24,6 +24,7 @@ export default defineConfig({
     preserveSymlinks: true,
     alias: {
       '~': resolve(__dirname, 'src'),
+      '@': resolve(__dirname, 'node_modules'),
     },
   },
 });
