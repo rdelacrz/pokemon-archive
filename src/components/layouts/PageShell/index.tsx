@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren, Suspense } from 'react';
 import { PageContextProvider } from '~/contexts/usePageContext';
 import type { PageContext } from '~/types';
 import Header from './Header';
@@ -13,7 +13,7 @@ export const PageShell: FC<PropsWithChildren<PageShellProps>> = ({ children, pag
   return (
     <React.StrictMode>
       <PageContextProvider pageContext={pageContext}>
-        <Header />
+        <Header urlPathname={pageContext.urlPathname} />
         <div>
           {children}
         </div>

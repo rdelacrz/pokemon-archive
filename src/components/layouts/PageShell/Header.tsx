@@ -1,23 +1,32 @@
 import { FC } from 'react';
+import { MenuItem } from 'primereact/menuitem';
 import { TabMenu } from 'primereact/tabmenu';
 
-export const Header: FC<{}> = () => {
+interface HeaderProps {
+  urlPathname: string;
+}
+
+export const Header: FC<HeaderProps> = ({ urlPathname }) => {
+  const tabMenuModel: MenuItem[] = [
+    {
+      label: 'Home',
+      icon: 'pi pi-home',
+      url: '/',
+    },
+    {
+      label: 'Search',
+      icon: 'pi pi-search',
+      url: '/search',
+    },
+  ];
+  const activeIndex = tabMenuModel.findIndex(item =>
+    item.url === '/'
+      ? urlPathname === '/'
+      : item.url?.startsWith(urlPathname)
+  );
   return (
     <header>
-      <TabMenu
-        model={[
-          {
-            label: 'Home',
-            icon: 'pi pi-home',
-            url: '/',
-          },
-          {
-            label: 'Search',
-            icon: 'pi pi-search',
-            url: '/search',
-          },
-        ]}
-      />
+      <TabMenu model={tabMenuModel} activeIndex={activeIndex} />
     </header>
   );
 }

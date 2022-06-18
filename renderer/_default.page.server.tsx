@@ -1,12 +1,13 @@
 import ReactDOMServer from 'react-dom/server';
 import { PageShell } from '~/components/layouts/PageShell';
-import { escapeInject, dangerouslySkipEscape, pipeNodeStream } from 'vite-plugin-ssr';
+import { escapeInject, pipeNodeStream } from 'vite-plugin-ssr';
 import type { PageContext } from '~/types';
 import type { PageContextBuiltIn } from 'vite-plugin-ssr';
 
-export { render }
+export { render };
+  
 // See https://vite-plugin-ssr.com/data-fetching
-export const passToClient = ['pageProps', 'urlPathname']
+export const passToClient = ['pageProps', 'urlPathname'];
 
 async function render(pageContext: PageContextBuiltIn & PageContext) {
   const { Page, pageProps } = pageContext;
@@ -27,8 +28,8 @@ async function render(pageContext: PageContextBuiltIn & PageContext) {
 
   // See https://vite-plugin-ssr.com/head
   const { documentProps } = pageContext;
-  const title = documentProps?.title || 'Vite SSR app';
-  const desc = documentProps?.description || 'App using Vite + vite-plugin-ssr';
+  const title = documentProps?.title || 'Pokemon Archive';
+  const desc = documentProps?.description || 'Pokemon Data Archiving Application';
 
   const documentHtml = escapeInject`<!DOCTYPE html>
     <html lang="en">
