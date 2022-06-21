@@ -26,6 +26,12 @@ a {
   text-decoration: none;
 }
 
+.container {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
 // For labeling items without visual text for screen readers
 .hidden-label {
   opacity: 0;
@@ -37,12 +43,12 @@ a {
 .desktop {
   // Hides content smaller than md screens 
   @media only screen and (max-width: 959px) {
-      display: none !important;
+    display: none !important;
   }
 }
 .mobile {
   // Hides content larger than sm screens 
   @media only screen and (min-width: 960px) {
-      display: none !important;
+    display: none !important;
   }
 }

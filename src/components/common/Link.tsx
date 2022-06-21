@@ -1,5 +1,5 @@
 import React from 'react'
-import { usePageContext } from '~/contexts/usePageContext';
+import { usePageContext } from '~/utils/contexts/usePageContext';
 
 export { Link };
 

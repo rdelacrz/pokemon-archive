@@ -1,0 +1,25 @@
+.header-wrapper {
+    position: fixed;
+    border-bottom: solid 2px #DEE2E6;
+    width: 100%;
+    .navbar-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: -2px;    // Allows border to line up with navbar's built-in border
+        .site-logo {
+            margin-right: 20px;
+        }
+        .tab-wrapper {
+            display: flex;
+            align-items: center;
+            .button-container {
+                padding: 10px;
+                button {
+                    height: 2em;
+                    width: 2em;
+                }
+            }
+        }
+    }
+}

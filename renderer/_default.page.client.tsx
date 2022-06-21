@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client';
 import { useClientRouter } from 'vite-plugin-ssr/client/router';
-import { PageShell } from '~/components/layouts/PageShell';
+import { PageShell } from '~/components/layouts/page-shell';
 import type { PageContext } from '~/types';
 import { getPageTitle } from './getPageTitle';
 

@@ -1,5 +1,5 @@
 import ReactDOMServer from 'react-dom/server';
-import { PageShell } from '~/components/layouts/PageShell';
+import { PageShell } from '~/components/layouts/page-shell';
 import { escapeInject, pipeNodeStream } from 'vite-plugin-ssr';
 import type { PageContext } from '~/types';
 import type { PageContextBuiltIn } from 'vite-plugin-ssr';
