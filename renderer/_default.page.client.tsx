@@ -1,25 +1,29 @@
 import ReactDOM from 'react-dom/client';
-import React from 'react';
-import { getPage } from 'vite-plugin-ssr/client';
+import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client';
+import { useClientRouter } from 'vite-plugin-ssr/client/router';
 import { PageShell } from '~/components/layouts/PageShell';
 import type { PageContext } from '~/types';
-import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client';
+import { getPageTitle } from './getPageTitle';
 
-hydrate();
-
-async function hydrate() {
-  // We do Server Routing, but we can also do Client Routing by using `useClientRouter()`
-  // instead of `getPage()`, see https://vite-plugin-ssr.com/useClientRouter
-  const pageContext = await getPage<PageContextBuiltInClient & PageContext>()
-  const { Page, pageProps } = pageContext
-
-  const container = document.getElementById('page-view');
-  if (container) {
-    ReactDOM.hydrateRoot(
-      container,
+let root: ReactDOM.Root;
+const { hydrationPromise } = useClientRouter({
+  render(pageContext: PageContextBuiltInClient & PageContext) {
+    const { Page, pageProps } = pageContext;
+    const page = (
       <PageShell pageContext={pageContext}>
         <Page {...pageProps} />
-      </PageShell>,
-    );
-  }
-}
+      </PageShell>
+    )
+    const container = document.getElementById('page-view')!;
+    if (pageContext.isHydration) {
+      root = ReactDOM.hydrateRoot(container, page);
+    } else {
+      if (!root) {
+        root = ReactDOM.createRoot(container);
+      }
+      root.render(page);
+    }
+    document.title = getPageTitle(pageContext);
+  },
+  prefetchLinks: true,
+});

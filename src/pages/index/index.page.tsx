@@ -1,6 +1,6 @@
-export { Page };
+import { FC } from 'react';
 
-function Page() {
+export const Page: FC<{}> = () => {
   return (
     <>
       <h1>Welcome to Pokemon Archive</h1>
