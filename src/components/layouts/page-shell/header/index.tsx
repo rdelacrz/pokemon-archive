@@ -8,14 +8,15 @@ import useWindowSize from '~/utils/hooks/useWindowSize';
 
 import imageSrc from '~/assets/logos/poke-archive-logo.png';
 
-import './index.scss';
+import './styles.scss';
 
 interface HeaderProps {
   urlPathname: string;
   onHeightUpdate: (height: number) => void;
+  onLoginClick: VoidFunction;
 }
 
-export const Header: FC<HeaderProps> = ({ urlPathname, onHeightUpdate }) => {
+export const Header: FC<HeaderProps> = ({ urlPathname, onHeightUpdate, onLoginClick }) => {
   const headerRef = useRef<HTMLElement>(null);
 
   // Sends updated header height to parent component every time window width is updated
@@ -52,7 +53,12 @@ export const Header: FC<HeaderProps> = ({ urlPathname, onHeightUpdate }) => {
         <div className='tab-wrapper'>
           <TabMenu model={tabMenuModel} activeIndex={activeIndex} />
           <div className='button-container'>
-            <Button icon='pi pi-user' className='p-button-rounded p-button-primary' aria-label='Login' />
+            <Button
+              icon='pi pi-user'
+              className='p-button-rounded p-button-primary'
+              aria-label='Login'
+              onClick={onLoginClick}
+            />
           </div>
         </div>
       </div>

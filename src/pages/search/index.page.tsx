@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import './index.scss';
+import './styles.scss';
 
 export const Page: FC<{}> = () => {
   return (
