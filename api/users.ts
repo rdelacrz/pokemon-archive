@@ -99,7 +99,7 @@ async function registerUser(request: VercelRequest, response: VercelResponse) {
 
     // Sends email with verification link
     const subject = 'User Account Verification';
-    const verificationLink = `${process.env.BASE_URL}/verify/${jwt}`
+    const verificationLink = `${process.env.VITE_APP_URL}/verify/${jwt}`
     const emailBody = `
       <p>Dear Pokemon fan,</p>
       <p>Please verify your account by clicking the link below.</p>

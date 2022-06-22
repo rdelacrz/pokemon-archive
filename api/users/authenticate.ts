@@ -1,4 +1,5 @@
 import { compare } from 'bcrypt';
+import cookie from 'cookie';
 import { SignJWT } from 'jose';
 import { connect } from 'mongoose';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
@@ -42,7 +43,9 @@ async function loginUser(request: VercelRequest, response: VercelResponse) {
     user.loginDate = new Date();
     await user.save();
 
-    return response.send(jwt);
+    return response
+      .setHeader('Set-Cookie', cookie.serialize('jwt', jwt, { httpOnly: true }))
+      .send(true);
   } catch (err) {
     return response.status(400).send(err);
   }

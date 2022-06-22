@@ -4,6 +4,8 @@ interface ImportMetaEnv {
   readonly BASE_URL: string;
   readonly DEV: boolean;
   readonly PROD: boolean;
+  
+  readonly VITE_APP_URL: string;
 }
 
 interface ImportMeta {
@@ -23,6 +25,7 @@ namespace NodeJS {
     readonly JWT_AUDIENCE: string;
     readonly JWT_VERIFY_AUDIENCE: string;
     readonly POKEMON_TGC_API_KEY: string;
-    readonly BASE_URL: string;
+
+    readonly VITE_APP_URL: string;
   }
 }
