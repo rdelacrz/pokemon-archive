@@ -34,7 +34,7 @@ async function verifyRegistration(request: VercelRequest, response: VercelRespon
 
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   switch (request.method) {
-    case 'GET': return verifyRegistration(request, response);
+    case 'POST': return verifyRegistration(request, response);
     default: return response.status(405).json({ error: 'You do not have access to the method.' });
   }
 }

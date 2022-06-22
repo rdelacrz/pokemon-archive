@@ -1,2 +1,3 @@
 export * from './api-error';
-export * from './create-user-param';
+export * from './registered-user-param';
+export * from './user';
