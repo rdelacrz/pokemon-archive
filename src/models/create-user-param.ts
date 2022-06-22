@@ -1,4 +1,4 @@
-export type CreateUserParam = {
+export interface CreateUserParam {
   username: string;
   password: string;
   confirmPassword: string;

@@ -4,7 +4,7 @@ import { Button } from 'primereact/button';
 import { Image } from 'primereact/image';
 import { MenuItem } from 'primereact/menuitem';
 import { TabMenu } from 'primereact/tabmenu';
-import useWindowSize from '~/utils/hooks/useWindowSize';
+import { useAppDataContext, useWindowSize } from '~/utils';
 
 import imageSrc from '~/assets/logos/poke-archive-logo.png';
 
@@ -17,6 +17,7 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ urlPathname, onHeightUpdate, onLoginClick }) => {
+  const { isLoggedIn } = useAppDataContext();
   const headerRef = useRef<HTMLElement>(null);
 
   // Sends updated header height to parent component every time window width is updated
@@ -27,6 +28,16 @@ export const Header: FC<HeaderProps> = ({ urlPathname, onHeightUpdate, onLoginCl
       onHeightUpdate(newHeaderHeight);
     }
   }, [width]);
+
+  /* Functions */
+
+  const handleLogin = () => {
+    if (!isLoggedIn) {
+      onLoginClick();
+    }
+  }
+
+  /* Regular variables */
 
   const tabMenuModel: MenuItem[] = [
     {
@@ -57,7 +68,7 @@ export const Header: FC<HeaderProps> = ({ urlPathname, onHeightUpdate, onLoginCl
               icon='pi pi-user'
               className='p-button-rounded p-button-primary'
               aria-label='Login'
-              onClick={onLoginClick}
+              onClick={handleLogin}
             />
           </div>
         </div>

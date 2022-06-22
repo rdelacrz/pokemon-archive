@@ -1,0 +1,14 @@
+.login-side-panel-wrapper {
+    #loginForm {
+        .field {
+            margin-bottom: 1rem;
+            label {
+                display: block;
+                font-size: 0.8rem;
+            }
+        }
+        small {
+            display: block;
+        }
+    }
+}

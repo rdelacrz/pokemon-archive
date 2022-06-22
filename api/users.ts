@@ -2,11 +2,42 @@ import { genSalt, hash } from 'bcrypt';
 import { SignJWT } from 'jose';
 import { connect } from 'mongoose';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sendEmail } from './_emailManager';
 import { User } from './_models';
-import { MONGODB_URI, SECRET_KEY } from './_utils';
+import { MONGODB_URI, SECRET_KEY, sendEmail, verifyJWT } from './_utils';
 
 const validPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+])[A-Za-z\d!@#$%^&*()\-+]{8,100}$/;
+
+async function getUserData(request: VercelRequest, response: VercelResponse) {
+  const jwt = request.cookies.jwt;
+
+  return await verifyJWT(jwt, response,
+    async (payload) => {
+      try {
+        await connect(MONGODB_URI);
+
+        // Checks to ensure that user actually exists in system
+        const user = await User.findById(payload.userId);
+        if (!user) {
+          return response.status(403).json({ error: 'User does not exist in system!' });
+        }
+
+        const curatedUserData = {
+          username: user.username,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          creationDate: user.creationDate,
+          loginDate: user.loginDate,
+          modifiedDate: user.modifiedDate,
+          verified: user.verified,
+          active: user.active,
+        };
+        return response.send(curatedUserData);
+      } catch (err) {
+        return response.status(400).send(err);
+      }
+    });
+}
 
 async function registerUser(request: VercelRequest, response: VercelResponse) {
   const username = request.body.username as string;
@@ -85,6 +116,7 @@ async function registerUser(request: VercelRequest, response: VercelResponse) {
 
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   switch (request.method) {
+    case 'GET': return getUserData(request, response);
     case 'POST': return registerUser(request, response);
     default: return response.status(405).json({ error: 'You do not have access to the method.' });
   }

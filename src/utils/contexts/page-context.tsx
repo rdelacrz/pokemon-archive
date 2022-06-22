@@ -2,7 +2,20 @@
 // More infos: https://vite-plugin-ssr.com/pageContext-anywhere
 
 import { createContext, ReactNode, useContext } from 'react';
-import type { PageContext } from '~/types';
+
+type PageProps = {};
+
+// The `pageContext` that are available in both on the server-side and browser-side
+type PageContext = {
+  Page: (pageProps: PageProps) => React.ReactElement;
+  pageExports: { documentProps?: { title: string } };
+  pageProps: PageProps;
+  urlPathname: string;
+  documentProps?: {
+    title?: string;
+    description?: string;
+  }
+}
 
 const Context = createContext<PageContext>(undefined as any);
 
@@ -15,4 +28,4 @@ function usePageContext() {
   return pageContext;
 }
 
-export { PageContextProvider, usePageContext };
+export { PageProps, PageContext, PageContextProvider, usePageContext };

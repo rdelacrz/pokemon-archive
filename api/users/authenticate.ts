@@ -2,8 +2,8 @@ import { compare } from 'bcrypt';
 import { SignJWT } from 'jose';
 import { connect } from 'mongoose';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { User } from './_models';
-import { MONGODB_URI, SECRET_KEY } from './_utils';
+import { User } from '../_models';
+import { MONGODB_URI, SECRET_KEY } from '../_utils';
 
 async function loginUser(request: VercelRequest, response: VercelResponse) {
   const username = request.body.username as string;

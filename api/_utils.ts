@@ -1,6 +1,7 @@
-/* Contains constants and functions to be used for MongoDB-related serverless functions. */
-import { VercelRequest, VercelResponse } from '@vercel/node';
+/* Contains constants and functions to be used for Vercel serverless functions. */
 import { JWTPayload, jwtVerify } from 'jose';
+import fetch from 'node-fetch';
+import { VercelRequest, VercelResponse } from '@vercel/node';
 
 export const MONGODB_URI = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_HOST}/${process.env.MONGODB_DB}?retryWrites=true&w=majority`;
 export const SECRET_KEY = Buffer.from(process.env.JWT_SECRET || '');
@@ -32,4 +33,36 @@ export const verifyJWT = async (
   } catch (err) {
     return response.status(401).send(err);
   }
+}
+
+export const sendEmail = async (toEmail: string, subject: string, body: string, firstName?: string, lastName?: string) => {
+  const name = [firstName, lastName].filter(n => !!n?.length).join(' ');
+
+  const bodyParams = {
+    sender: {
+      name: 'Pokemon Archive',
+      email: 'no-reply@pokemon-archive.com',
+    },
+    to: [  
+      {  
+        email: toEmail,
+        name,
+      },
+    ],
+    subject,
+    htmlContent: body,
+  }
+  
+  return await fetch(
+    process.env.SENDINBLUE_API_URL || '',
+    {
+      method: 'POST',
+      headers: {
+        'api-key': process.env.SENDINBLUE_API_KEY || '',
+        'content-type': 'application/json',
+        'accept': 'application/json',
+      },
+      body: JSON.stringify(bodyParams),
+    }
+  );
 }

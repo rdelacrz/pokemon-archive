@@ -1,4 +1,4 @@
-import { PageContext } from '~/types';
+import { PageContext } from '~/utils/contexts/page-context';
 
 export function getPageTitle(pageContext: PageContext): string {
   const title =

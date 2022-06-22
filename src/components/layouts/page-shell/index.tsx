@@ -1,10 +1,12 @@
 import React, { FC, PropsWithChildren, useState } from 'react';
-import type { PageContext } from '~/types';
-import { PageContextProvider } from '~/utils/contexts/usePageContext';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { AppDataContextProvider, PageContext, PageContextProvider } from '~/utils/contexts';
 import Header from './header';
 import LoginSidePanel from './login-side-panel';
 
 import './styles.scss';
+
+const queryClient = new QueryClient();
 
 interface PageShellProps {
   pageContext: PageContext;
@@ -16,15 +18,19 @@ export const PageShell: FC<PropsWithChildren<PageShellProps>> = ({ children, pag
   return (
     <React.StrictMode>
       <PageContextProvider pageContext={pageContext}>
-        <Header
-          urlPathname={pageContext.urlPathname}
-          onHeightUpdate={setPaddingTop}
-          onLoginClick={() => setLoginPanelVisible(true)}
-        />
-        <div className='container' style={{ paddingTop }}>
-          {children}
-        </div>
-        <LoginSidePanel visible={loginPanelVisible} setVisible={setLoginPanelVisible} />
+        <QueryClientProvider client={queryClient}>
+          <AppDataContextProvider>
+            <Header
+              urlPathname={pageContext.urlPathname}
+              onHeightUpdate={setPaddingTop}
+              onLoginClick={() => setLoginPanelVisible(true)}
+            />
+            <div className='container' style={{ paddingTop }}>
+              {children}
+            </div>
+            <LoginSidePanel visible={loginPanelVisible} setVisible={setLoginPanelVisible} />
+          </AppDataContextProvider>
+        </QueryClientProvider>
       </PageContextProvider>
     </React.StrictMode>
   );
