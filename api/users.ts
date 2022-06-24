@@ -3,7 +3,7 @@ import { SignJWT } from 'jose';
 import { connect } from 'mongoose';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { User } from './_models';
-import { MONGODB_URI, SECRET_KEY, sendEmail, verifyJWT } from './_utils';
+import { extractCuratedUserData, MONGODB_URI, SECRET_KEY, sendEmail, verifyJWT } from './_utils';
 
 const validPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+])[A-Za-z\d!@#$%^&*()\-+]{8,100}$/;
 
@@ -21,17 +21,7 @@ async function getUserData(request: VercelRequest, response: VercelResponse) {
           return response.status(403).json({ error: 'User does not exist in system!' });
         }
 
-        const curatedUserData = {
-          username: user.username,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          creationDate: user.creationDate,
-          loginDate: user.loginDate,
-          modifiedDate: user.modifiedDate,
-          verified: user.verified,
-          active: user.active,
-        };
+        const curatedUserData = extractCuratedUserData(user);
         return response.send(curatedUserData);
       } catch (err) {
         return response.status(400).send(err);

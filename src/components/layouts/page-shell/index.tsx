@@ -2,7 +2,7 @@ import React, { FC, PropsWithChildren, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AppDataContextProvider, PageContext, PageContextProvider } from '~/utils/contexts';
 import Header from './header';
-import LoginSidePanel from './login-side-panel';
+import LoginModal from './login-modal';
 
 import './styles.scss';
 
@@ -28,7 +28,7 @@ export const PageShell: FC<PropsWithChildren<PageShellProps>> = ({ children, pag
             <div className='container' style={{ paddingTop }}>
               {children}
             </div>
-            <LoginSidePanel visible={loginPanelVisible} setVisible={setLoginPanelVisible} />
+            <LoginModal visible={loginPanelVisible} setVisible={setLoginPanelVisible} />
           </AppDataContextProvider>
         </QueryClientProvider>
       </PageContextProvider>

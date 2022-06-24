@@ -13,11 +13,29 @@
         .tab-wrapper {
             display: flex;
             align-items: center;
-            .button-container {
+            .user-actions-wrapper {
+                display: flex;
+                align-items: center;
                 padding: 10px;
-                button {
-                    height: 2em;
-                    width: 2em;
+                #loginModalTrigger {
+                    padding: 0.4rem 0.8rem;
+                }
+                .username-menu-trigger-wrapper {
+                    font-size: 0.8rem;
+                    margin-left: 0.5rem;
+                    .username {
+                        font-size: 0.7rem;
+                        margin: 0 0 0.1rem 0.2rem;
+                    }
+                    #editUserMenuTrigger {
+                        font-size: 0.6rem;
+                        padding: 0 0.1rem;
+                        .p-button-icon {
+                            font-size: 0.6rem;
+                            margin-top: 0.2rem;
+                            margin-right: 0.3rem;
+                        }
+                    }
                 }
             }
         }

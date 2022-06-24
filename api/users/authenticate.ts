@@ -4,7 +4,7 @@ import { SignJWT } from 'jose';
 import { connect } from 'mongoose';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { User } from '../_models';
-import { MONGODB_URI, SECRET_KEY } from '../_utils';
+import { extractCuratedUserData, MONGODB_URI, SECRET_KEY } from '../_utils';
 
 async function loginUser(request: VercelRequest, response: VercelResponse) {
   const username = request.body.username as string;
@@ -43,9 +43,11 @@ async function loginUser(request: VercelRequest, response: VercelResponse) {
     user.loginDate = new Date();
     await user.save();
 
+    const curatedUserData = extractCuratedUserData(user);
+
     return response
       .setHeader('Set-Cookie', cookie.serialize('jwt', jwt, { httpOnly: true }))
-      .send(true);
+      .send(curatedUserData);
   } catch (err) {
     return response.status(400).send(err);
   }

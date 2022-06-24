@@ -1,4 +1,6 @@
-.login-side-panel-wrapper {
+.login-modal-wrapper {
+    max-width: 450px;
+    width : 100%;
     #loginForm {
         .field {
             margin-bottom: 1rem;
@@ -7,9 +9,17 @@
                 font-size: 0.8rem;
                 margin-bottom: 0.2rem;
             }
+            .p-inputtext, .p-inputwrapper {
+                width: 100%;
+            }
         }
         small {
             display: block;
+        }
+        .button-row {
+            #loginBtn {
+                min-width: 120px;
+            }
         }
     }
 }

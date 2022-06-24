@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 export const useWindowSize = () => {
   const [size, setSize] = useState([0, 0]);
 
-  const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+  const useIsomorphicLayoutEffect = !import.meta.env.SSR ? useLayoutEffect : useEffect;
 
   useIsomorphicLayoutEffect(() => {
     function updateSize() {

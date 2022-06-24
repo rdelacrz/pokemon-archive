@@ -2,6 +2,7 @@
 import { JWTPayload, jwtVerify } from 'jose';
 import fetch from 'node-fetch';
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { IUser } from './_models';
 
 export const MONGODB_URI = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_HOST}/${process.env.MONGODB_DB}?retryWrites=true&w=majority`;
 export const SECRET_KEY = Buffer.from(process.env.JWT_SECRET || '');
@@ -33,6 +34,21 @@ export const verifyJWT = async (
   } catch (err) {
     return response.status(401).send(err);
   }
+}
+
+export const extractCuratedUserData = (user: IUser) => {
+  const curatedUserData = {
+    username: user.username,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    creationDate: user.creationDate,
+    loginDate: user.loginDate,
+    modifiedDate: user.modifiedDate,
+    verified: user.verified,
+    active: user.active,
+  };
+  return curatedUserData;
 }
 
 export const sendEmail = async (toEmail: string, subject: string, body: string, firstName?: string, lastName?: string) => {

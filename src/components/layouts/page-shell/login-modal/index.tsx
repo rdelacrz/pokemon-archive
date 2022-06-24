@@ -2,13 +2,14 @@ import { FC, useState } from 'react';
 import clsx from 'clsx';
 import { useFormik } from 'formik';
 import { Button } from 'primereact/button';
-import { Sidebar } from 'primereact/sidebar';
+import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import { useMutation } from 'react-query';
 import * as Yup from 'yup';
-import { APIError } from '~/models';
+import { APIError, User } from '~/models';
 import { userService } from '~/services';
+import { useAppDataContext } from '~/utils';
 
 import './styles.scss';
 
@@ -17,20 +18,25 @@ interface LoginFields {
   password: string;
 }
 
-interface LoginSidePanelProps {
+interface LoginFormModalProps {
   visible?: boolean;
   setVisible: (visible: boolean) => void;
 }
 
-export const LoginSidePanel: FC<LoginSidePanelProps> = ({ visible, setVisible }) => {
+export const LoginFormModal: FC<LoginFormModalProps> = ({ visible, setVisible }) => {
   const [loginError, setLoginError] = useState<string>();
+  const { setUsername } = useAppDataContext();
 
-  const loginMutation = useMutation<boolean, APIError, LoginFields>(
+  const { isLoading, mutateAsync: login } = useMutation<User, APIError, LoginFields>(
     'login',
     ({ username, password }) => userService.authenticate(username, password),
     {
       onError: (apiError) => setLoginError(apiError.response?.data?.error),
-      onSuccess: () => setLoginError(undefined),
+      onSuccess: (user) => {
+        setUsername(user?.username);    // Sets username in storage
+        setLoginError(undefined);       // Clears any existing errors in login form
+        setVisible(false);              // Hides login modal
+      },
     }
   );
 
@@ -48,7 +54,7 @@ export const LoginSidePanel: FC<LoginSidePanelProps> = ({ visible, setVisible })
         .required('Password required'),
     }),
     onSubmit: async (values) => {
-      await loginMutation.mutateAsync(values);
+      await login(values);
     },
   });
 
@@ -56,10 +62,10 @@ export const LoginSidePanel: FC<LoginSidePanelProps> = ({ visible, setVisible })
   const passwordError = formik.errors.password || loginError;
 
   return (
-    <Sidebar
-      className='login-side-panel-wrapper'
+    <Dialog
+      className='login-modal-wrapper'
+      header='Login Form'
       visible={visible}
-      position='right'
       onHide={() => setVisible(false)}
     >
       <form id='loginForm' onSubmit={formik.handleSubmit}>
@@ -70,7 +76,7 @@ export const LoginSidePanel: FC<LoginSidePanelProps> = ({ visible, setVisible })
             name='username'
             className={clsx({ 'p-invalid': Boolean(usernameError) })}
             value={formik.values.username}
-            placeholder='Username'
+            placeholder='Enter username'
             onChange={formik.handleChange}
           />
           {Boolean(usernameError) && (
@@ -84,8 +90,9 @@ export const LoginSidePanel: FC<LoginSidePanelProps> = ({ visible, setVisible })
             name='password'
             className={clsx({ 'p-invalid': Boolean(passwordError) })}
             autoComplete='current-password'
+            feedback={false}
             value={formik.values.password}
-            placeholder='Password'
+            placeholder='Enter password'
             onChange={formik.handleChange}
           />
           {Boolean(passwordError) && (
@@ -93,13 +100,11 @@ export const LoginSidePanel: FC<LoginSidePanelProps> = ({ visible, setVisible })
           )}
         </div>
         <div className='button-row'>
-          <Button id='logInBtn' type='submit'>
-            Log In
-          </Button>
+          <Button id='loginBtn' label='Log In' type='submit' loading={isLoading} />
         </div>
       </form>
-    </Sidebar>
+    </Dialog>
   );
 }
 
-export default LoginSidePanel;
+export default LoginFormModal;

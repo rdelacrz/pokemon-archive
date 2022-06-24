@@ -36,4 +36,6 @@ const userSchema = new Schema<IUser>({
   active: { type: Boolean, required: false },
 });
 
-export const User = model<IUser>('users', userSchema);
+const User = model<IUser>('users', userSchema);
+
+export { IUser, User };

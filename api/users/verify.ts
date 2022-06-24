@@ -21,7 +21,7 @@ async function verifyRegistration(request: VercelRequest, response: VercelRespon
         user.verified = true;
         user.active = true;
         user.modifiedDate = new Date();
-        await user.save()
+        await user.save();
 
         return response.send(true);
       } catch (err) {

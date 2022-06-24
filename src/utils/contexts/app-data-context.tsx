@@ -1,18 +1,26 @@
-import { createContext, ReactNode, useContext } from 'react';
+import { createContext, ReactNode, useContext, useCallback } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 
 type AppDataContext = {
   isLoggedIn?: boolean;
-  setLoginState: (isLoggedIn: boolean) => void;
+  username?: string;
+  setUsername: (username?: string) => void;
+  clearLoginData: VoidFunction;
 }
 
 const Context = createContext<AppDataContext>(undefined as any);
 
 function AppDataContextProvider({ children }: { children: ReactNode }) {
-  const [isLoggedIn, setLoginState] = useLocalStorageState<boolean>('isLoggedIn');
+  const [username, setUsername] = useLocalStorageState<string>('username');
+
+  const clearLoginData = useCallback(() => {
+    setUsername(undefined);
+  }, [setUsername]);
+
+  const isLoggedIn = Boolean(username);
 
   return (
-    <Context.Provider value={{ isLoggedIn, setLoginState }}>
+    <Context.Provider value={{ isLoggedIn, username, setUsername, clearLoginData }}>
       {children}
     </Context.Provider>
   );

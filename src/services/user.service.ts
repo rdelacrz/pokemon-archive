@@ -15,7 +15,11 @@ export const userService = {
   authenticate: async (username: string, password: string) => {
     const url = `/${API_ENDPOINT}/authenticate`;
     const body = { username, password };
-    return http.client.post<boolean>(url, body).then(resp => resp.data);
+    return http.client.post<User>(url, body).then(resp => resp.data);
+  },
+  logout: async () => {
+    const url = `/${API_ENDPOINT}/logout`;
+    return http.client.post<{}>(url).then(resp => resp.data);
   },
   verify: async (verifyKey: string) => {
     const url = `/${API_ENDPOINT}/verify?verifyKey=${verifyKey}`;
